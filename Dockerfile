@@ -1,7 +1,7 @@
 #build stage
 FROM registry.cn-beijing.aliyuncs.com/system-dk1/golang:1.20 AS builder
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
-RUN apk add --no-cache git
+#RUN apk add --no-cache git
 WORKDIR /go/src/app
 COPY . .
 #RUN go get -d -v ./...
