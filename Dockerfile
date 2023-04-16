@@ -1,4 +1,4 @@
-FROM golang:1.18.3-alpine3.16 AS gin-web
+FROM registry.cn-beijing.aliyuncs.com/system-dk1/golang:1.20
 
 RUN echo "----------------- Gin Web Enterpise Wx building -----------------"
 
