@@ -13,7 +13,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/bin/app -v ./...
 FROM registry.cn-beijing.aliyuncs.com/system-dk1/alpine:latest
 #RUN apk --no-cache add ca-certificates
 COPY --from=builder /go/bin/app /app
-#ENTRYPOINT /app
+ENTRYPOINT /app
 LABEL Name=demo Version=0.0.1
 EXPOSE 8080
-CMD ["infinite", "sleep"]
+#CMD ["infinite", "sleep"]
