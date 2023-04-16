@@ -1,19 +1,12 @@
-#build stage
 FROM registry.cn-beijing.aliyuncs.com/system-dk1/golang:1.20 AS builder
-# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
-#RUN apk add --no-cache git
-WORKDIR /go/src/app
-COPY . .
-#RUN go get -d -v ./...
-#RUN go env -w GO111MODULE=on
-#RUN go env -w GOPROXY=https://goproxy.cn,direct
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/app -v ./...
 
-#final stage
-FROM registry.cn-beijing.aliyuncs.com/system-dk1/alpine:latest
-#RUN apk --no-cache add ca-certificates
-COPY --from=builder /go/bin/app /app
-ENTRYPOINT /app
-LABEL Name=demo Version=0.0.1
+
+RUN echo "----------------- Gin Web Enterpise Wx building -----------------"
+RUN mkdir -p /app/gin-web
+WORKDIR /app/gin-web
+COPY go.mod go.sum ./
+RUN go mod tidy
+COPY . .
+RUN go build -o gin-web .
 EXPOSE 8080
-#CMD ["infinite", "sleep"]
+ENTRYPOINT  /app/gin-web/gin-web
